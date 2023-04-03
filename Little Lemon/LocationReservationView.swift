@@ -67,14 +67,15 @@ struct LocationReservationView: View {
             .padding()
             
             Button {
-                if inputFields {
-                    alertTitle = "Error"
-                    alertMessage = "Please fill out all required fields."
-                    alert = true
-                } else {
+                if locations.reservations.isEmpty {
                     addReservation()
                     alertTitle = "Success"
                     alertMessage = "Your resrvation has been successfully added!"
+                    alert = true
+                    dismiss()
+                } else {
+                    alertTitle = "Error"
+                    alertMessage = "You already have a reservation!"
                     alert = true
                     dismiss()
                 }
@@ -85,6 +86,7 @@ struct LocationReservationView: View {
                     .background(inputFields ? .gray: .blue)
                     .clipShape(Capsule())
             }
+            .disabled(inputFields ? true: false)
             .padding(.bottom)
             .alert(alertTitle, isPresented: $alert) {
             } message: {

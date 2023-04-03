@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ReservationView: View {
     @EnvironmentObject var locations: Locations
+    @State private var alert = false
     
     var body: some View {
         VStack {
@@ -20,7 +21,7 @@ struct ReservationView: View {
                         .foregroundColor(.secondary)
                         .font(.title3)
                 } else {
-                    Text("Your reservations")
+                    Text("Your reservation")
                         .padding()
                         .background(.thickMaterial)
                         .clipShape(Capsule())
@@ -49,11 +50,26 @@ struct ReservationView: View {
                         }
                     }
                     .listStyle(.plain)
+                    
+                    Button {
+                        alert = true
+                    } label: {
+                        Text("Cancel reservation")
+                            .padding()
+                            .foregroundColor(.white)
+                            .background(.red)
+                            .clipShape(Capsule())
+                            .padding(.bottom)
+                    }
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .padding()
+        .alert("Are you sure you want to cancel this reservation?", isPresented: $alert) {
+            Button("Cancel", role: .cancel) { }
+            Button("Yes", role: .destructive) { locations.reservations.removeAll() }
+        }
     }
 }
 

@@ -19,7 +19,7 @@ struct ContentView: View {
             
             ReservationView()
                 .tabItem {
-                    Label("Reservations", systemImage: "note.text.badge.plus")
+                    Label("Reservation", systemImage: "note.text.badge.plus")
                 }
         }
         .environmentObject(locations)
